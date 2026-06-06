@@ -116,7 +116,7 @@
 
   <style>
     :root {
-      --cream: #F0E4D0;
+      --cream: #F8E8D4;
       --cream-soft: #F4EBDA;
       --brand-maroon: #E3242B;
       --deep-black: #220B1B;
@@ -212,10 +212,9 @@
       flex-direction: column;
       align-items: center;
       background: var(--cream);
-      padding: 2.5rem 0;
+      padding: 6rem 0 3rem;
       min-height: 100vh;
       min-height: 100dvh;
-      justify-content: center;
     }
 
     .hero-logo-wrap {
@@ -231,17 +230,14 @@
     }
 
     .hero-banner-container {
-      width: min(calc(100% - 2rem), 700px);
-      margin-bottom: 1.75rem;
-            overflow: hidden;
+      width: min(calc(100% - 2rem), 480px);
+      margin-bottom: 2rem;
     }
 
     .hero-banner-container img {
-      mix-blend-mode: multiply;
-      opacity: 0.6;
       width: 100%;
-      height: 100%;
-      object-fit: cover;`n      object-position: center 40%;`n      display: block;
+      height: auto;
+      display: block;
     }
 
     .hero-inner {
@@ -254,11 +250,11 @@
     }
 
     .hero-title {
-      font-size: 2.25rem;
-      line-height: 1.2;
+      font-size: 1.75rem;
+      line-height: 1.3;
       font-weight: 600;
       color: var(--brand-maroon);
-      max-width: 20ch;
+      max-width: 520px;
       margin-inline: auto;
     }
 
@@ -881,7 +877,7 @@
     }
 
     @media (min-width: 768px) {
-      .hero-title { font-size: 3.3rem; }
+      .hero-title { font-size: 2.25rem; }
       .hero-logo-img { height: 80px; }
       .hero-banner-container { max-height: 280px; }
       .hero-sub { font-size: 1.15rem; }
@@ -907,9 +903,6 @@
       from { opacity: 0; transform: translateY(22px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
-    @keyframes heroBannerFade {
-      from { opacity: 0; transform: scale(0.97); }
       to   { opacity: 0.6; transform: scale(1); }
     }
 
@@ -921,15 +914,6 @@
     .hero-logo-wrap {
       animation: heroFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
       animation-delay: 0.1s;
-    }
-
-    .hero-banner-container {
-      animation: heroBannerFade 1s cubic-bezier(0.16, 1, 0.3, 1) both;
-      animation-delay: 0.25s;
-    }
-
-    .hero-banner-container img {
-      animation: subtlePulse 6s ease-in-out infinite;
     }
 
     .hero-title {
@@ -1004,6 +988,9 @@
         width: 100%;
         max-width: 320px;
       }
+      .hero-banner-container {
+        width: calc(100% - 2rem);
+      }
     }
 
     @media (max-width: 768px) {
@@ -1015,6 +1002,107 @@
       }
       .cta-secondary-wrap {
         margin-top: 32px;
+      }
+    }
+
+    /* ---- CTA button ripple / press animation ---- */
+    .cta-primary {
+      overflow: hidden;
+    }
+
+    .cta-primary .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.35);
+      transform: scale(0);
+      animation: rippleAnim 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      pointer-events: none;
+    }
+
+    @keyframes rippleAnim {
+      to { transform: scale(4); opacity: 0; }
+    }
+
+    @keyframes ctaPop {
+      0%   { transform: scale(1); }
+      35%  { transform: scale(0.94); }
+      65%  { transform: scale(1.03); }
+      100% { transform: scale(1); }
+    }
+
+    .cta-primary.is-animating {
+      animation: ctaPop 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ---- Responsive CTA text ---- */
+    .cta-short-text { display: none; }
+    .cta-full-text  { display: inline; }
+
+    @media (max-width: 420px) {
+      .cta-full-text  { display: none; }
+      .cta-short-text { display: inline; }
+      .cta-primary {
+        padding: 15px 20px;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        max-width: 100%;
+      }
+    }
+
+    /* ---- Premium section dividers ---- */
+    .section-divider {
+      width: 48px;
+      height: 2px;
+      background: var(--brand-maroon);
+      margin: 0 auto 0.5rem;
+      border-radius: 2px;
+      opacity: 0.5;
+    }
+
+    /* ---- Premium mobile hero ---- */
+    @media (max-width: 480px) {
+      .hero {
+        padding: 1.75rem 0 2rem;
+      }
+      .hero-banner-container {
+        margin-bottom: 1.5rem;
+      }
+      .hero-title {
+        font-size: 1.65rem;
+        line-height: 1.25;
+      }
+      .hero-sub {
+        font-size: 0.875rem;
+        max-width: 90%;
+      }
+    }
+
+    /* ---- Premium card hover elevation ---- */
+    .cat-card:hover .cat-card__img {
+      transform: scale(1.05);
+    }
+
+    .cat-card__img {
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ---- Premium CTA secondary ---- */
+    .cta-secondary {
+      border-color: var(--brand-maroon);
+      color: var(--brand-maroon);
+    }
+    .cta-secondary:hover,
+    .cta-secondary:focus-visible {
+      background: var(--brand-maroon);
+      color: #FFFFFF;
+      border-color: var(--brand-maroon);
+    }
+
+    /* ---- Polaroid lift on mobile tap ---- */
+    @media (hover: none) {
+      .polaroid:active {
+        transform: rotate(0deg) scale(1.02) !important;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18) !important;
       }
     }
   </style>
@@ -1055,12 +1143,12 @@
   <main>
     <!-- ============ HERO ============ -->
     <header class="hero" aria-labelledby="hero-title">
-      <div class="hero-logo-wrap reveal">
+      <div class="hero-logo-wrap reveal" style="display:none;">
         <img src="logo.png" alt="Sattvika Jewels Logo" class="hero-logo-img" />
       </div>
 
-      <div class="hero-banner-container reveal">
-        <img src="banner.jpg" alt="Sattvika Jewels Banner" />
+      <div class="hero-banner-container">
+        <img src="banner.jpg" alt="Sattvika Jewels" />
       </div>
 
       <div class="hero-inner">
@@ -1413,6 +1501,34 @@
             carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
           });
         }
+      }
+    
+      // ---- CTA WhatsApp button ripple animation ----
+      var ctaBtn = document.querySelector('.cta-primary');
+      if (ctaBtn) {
+        ctaBtn.addEventListener('click', function (e) {
+          var btn = this;
+          // Ripple
+          var ripple = document.createElement('span');
+          ripple.className = 'ripple';
+          var rect = btn.getBoundingClientRect();
+          var size = Math.max(rect.width, rect.height);
+          var x = (e.clientX || rect.left + rect.width / 2) - rect.left - size / 2;
+          var y = (e.clientY || rect.top + rect.height / 2) - rect.top - size / 2;
+          ripple.style.width = ripple.style.height = size + 'px';
+          ripple.style.left = x + 'px';
+          ripple.style.top  = y + 'px';
+          btn.appendChild(ripple);
+          // Pop animation
+          btn.classList.remove('is-animating');
+          void btn.offsetWidth; // reflow
+          btn.classList.add('is-animating');
+          // Cleanup
+          window.setTimeout(function () {
+            if (ripple.parentNode) ripple.parentNode.removeChild(ripple);
+            btn.classList.remove('is-animating');
+          }, 600);
+        });
       }
     });
   </script>
