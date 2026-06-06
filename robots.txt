@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://sattvika-jewels.sonudevpr.workers.dev/sitemap.xml

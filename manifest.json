@@ -1,0 +1,21 @@
+{
+  "name": "Sattvika Jewels",
+  "short_name": "Sattvika",
+  "description": "Handcrafted Indian jewelry rooted in tradition.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F0E4D0",
+  "theme_color": "#E3242B",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
