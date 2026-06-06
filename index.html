@@ -49,7 +49,7 @@
   <!-- Preconnect and Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -148,7 +148,7 @@
       margin: 0;
       background: var(--cream);
       color: var(--ink);
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, -apple-system, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
       opacity: 0;
@@ -211,8 +211,9 @@
     }
 
     .ios-nav-logo {
-      height: 22px;
+      height: 28px;
       width: auto;
+      object-fit: contain;
     }
 
     .ios-nav-title {
@@ -547,8 +548,8 @@
       margin-bottom: 2rem;
       border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 12px 36px rgba(227, 36, 43, 0.05), 0 4px 12px rgba(0, 0, 0, 0.04);
+      border: 0.5px solid rgba(227, 36, 43, 0.12);
     }
 
     .hero-banner-container img {
@@ -577,9 +578,11 @@
 
     .hero-sub {
       margin-top: 0.75rem;
-      font-size: 1rem;
-      line-height: 1.75;
-      color: var(--deep-black);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-style: italic;
+      line-height: 1.5;
+      color: rgba(34, 11, 27, 0.85);
       max-width: 520px;
       margin-inline: auto;
     }
@@ -687,12 +690,14 @@
     }
 
     .section-copy {
-      margin: 1rem auto 0;
+      margin: 0.75rem auto 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-style: italic;
       max-width: 520px;
       text-align: center;
-      font-size: 1.05rem;
-      line-height: 1.7;
-      color: rgba(91, 43, 30, 0.85);
+      line-height: 1.5;
+      color: rgba(34, 11, 27, 0.8);
     }
 
     .carousel-wrap {
@@ -729,12 +734,12 @@
       display: block;
       background: #FFFFFF;
       border-radius: var(--radius-md);
-      box-shadow: var(--shadow-soft);
-      border: 0.5px solid rgba(34, 11, 27, 0.08);
+      box-shadow: 0 4px 14px rgba(227, 36, 43, 0.03);
+      border: 0.5px solid rgba(227, 36, 43, 0.08);
       overflow: hidden;
       padding: 12px;
       text-decoration: none;
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     @media (min-width: 768px) {
@@ -788,14 +793,20 @@
 
     .cat-card__label {
       display: inline-block;
-      background: rgba(227, 36, 43, 0.08);
+      background: rgba(227, 36, 43, 0.06);
       color: var(--brand-maroon);
-      padding: 4px 12px;
-      border-radius: 12px;
-      font-size: 11px;
+      padding: 5px 14px;
+      border-radius: 14px;
+      font-size: 0.7rem;
       font-weight: 600;
-      margin-top: 4px;
-      transition: background-color 0.2s, color 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 6px;
+      transition: background-color 0.2s, color 0.2s, transform 0.2s;
+    }
+    .cat-card:hover .cat-card__label {
+      background: var(--brand-maroon);
+      color: #FFFFFF;
     }
 
     .carousel-fade {
@@ -924,11 +935,11 @@
     }
 
     .reviews-subtext {
-      margin: 16px auto 0;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      font-weight: 400;
-      font-size: 18px;
-      line-height: 1.6;
+      margin: 12px auto 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-style: italic;
+      line-height: 1.5;
       color: rgba(34, 11, 27, 0.8);
       max-width: 500px;
     }
@@ -1069,8 +1080,10 @@
 
     .footer-copy {
       margin-top: 12px;
-      font-size: 0.875rem;
-      color: rgba(240, 228, 208, 0.85);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-style: italic;
+      color: rgba(248, 232, 212, 0.8);
     }
 
     .footer-link {
@@ -1685,7 +1698,7 @@
         />
       </div>
 
-      <p class="footer-copy">Crafted with Heritage.</p>
+      <p class="footer-copy">Timeless Jewelry. Rooted in Tradition.</p>
 
       <div class="footer-social" role="navigation" aria-label="Sattvika Jewels social links">
         <a href="https://www.instagram.com/sattvika_jewels/" target="_blank" rel="noopener noreferrer" class="footer-social__link">Instagram →</a>
@@ -1782,6 +1795,8 @@
       var sheet = document.getElementById('order-sheet');
       var backdrop = document.getElementById('order-sheet-backdrop');
       if (sheet && backdrop) {
+        sheet.style.transform = ''; // Clear inline styles
+        sheet.style.transition = '';
         sheet.classList.add('is-visible');
         backdrop.classList.add('is-visible');
         document.body.style.overflow = 'hidden'; // Lock background scrolling
@@ -1795,6 +1810,10 @@
         sheet.classList.remove('is-visible');
         backdrop.classList.remove('is-visible');
         document.body.style.overflow = ''; // Unlock background scrolling
+        // Reset transform styles to default after closing transition finishes
+        window.setTimeout(function() {
+          sheet.style.transform = '';
+        }, 350);
       }
     }
 
@@ -2064,6 +2083,56 @@
             btn.classList.remove('is-animating');
           }, 600);
         });
+      }
+
+      // ---- iOS Sheet Drag-to-Close gesture ----
+      var sheet = document.getElementById('order-sheet');
+      var handle = document.querySelector('.ios-sheet-handle');
+      var sheetHeader = document.querySelector('.ios-sheet-header');
+      
+      if (sheet && handle && sheetHeader) {
+        var startY = 0;
+        var currentY = 0;
+        var isDragging = false;
+        
+        function handleTouchStart(e) {
+          startY = e.touches[0].clientY;
+          isDragging = true;
+          sheet.style.transition = 'none'; // Disable transition during drag
+        }
+        
+        function handleTouchMove(e) {
+          if (!isDragging) return;
+          if (window.innerWidth >= 768) return; // Don't drag on tablet/desktop centered layout
+          var deltaY = e.touches[0].clientY - startY;
+          if (deltaY > 0) {
+            currentY = deltaY;
+            sheet.style.transform = 'translateY(' + deltaY + 'px)';
+          }
+        }
+        
+        function handleTouchEnd() {
+          if (!isDragging) return;
+          isDragging = false;
+          sheet.style.transition = ''; // Restore transition
+          
+          if (currentY > 80) {
+            closeOrderSheet();
+          } else {
+            // Snap back
+            sheet.style.transform = '';
+          }
+          currentY = 0;
+        }
+        
+        // Bind to handle and header
+        handle.addEventListener('touchstart', handleTouchStart, { passive: true });
+        handle.addEventListener('touchmove', handleTouchMove, { passive: true });
+        handle.addEventListener('touchend', handleTouchEnd);
+        
+        sheetHeader.addEventListener('touchstart', handleTouchStart, { passive: true });
+        sheetHeader.addEventListener('touchmove', handleTouchMove, { passive: true });
+        sheetHeader.addEventListener('touchend', handleTouchEnd);
       }
     });
   </script>
