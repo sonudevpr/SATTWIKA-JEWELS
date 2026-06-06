@@ -188,7 +188,8 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 50px;
+      height: calc(50px + env(safe-area-inset-top));
+      padding-top: env(safe-area-inset-top);
       background: rgba(248, 232, 212, 0.85); /* Translucent cream */
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
@@ -196,7 +197,8 @@
       z-index: 100;
       display: flex;
       align-items: center;
-      padding: 0 16px;
+      padding-left: 16px;
+      padding-right: 16px;
     }
 
     .ios-navbar-inner {
@@ -513,7 +515,7 @@
       flex-direction: column;
       align-items: center;
       background: var(--cream);
-      padding: 90px 0 40px; /* Offset for top navbar */
+      padding: calc(90px + env(safe-area-inset-top)) 0 40px; /* Offset for top navbar + safe area */
       min-height: 100vh;
       min-height: 100dvh;
     }
@@ -797,7 +799,25 @@
     }
 
     .carousel-fade {
-      display: none;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 40px;
+      pointer-events: none;
+      z-index: 2;
+      transition: opacity 0.3s ease;
+    }
+    .carousel-fade--left {
+      left: 0;
+      background: linear-gradient(to right, var(--cream-soft), transparent);
+      opacity: 0;
+    }
+    .carousel-fade--left.is-visible {
+      opacity: 1;
+    }
+    .carousel-fade--right {
+      right: 0;
+      background: linear-gradient(to left, var(--cream-soft), transparent);
     }
 
     .carousel-arrow {
@@ -1183,7 +1203,7 @@
     /* ---- Mobile optimizations ---- */
     @media (max-width: 480px) {
       .hero {
-        padding: 75px 0 32px;
+        padding: calc(75px + env(safe-area-inset-top)) 0 32px;
       }
       .hero-logo-img {
         height: 52px;
@@ -1211,7 +1231,7 @@
         font-size: 1.5rem;
       }
       .cat-card {
-        flex: 0 0 170px;
+        flex: 0 0 200px;
       }
       .reviews-heading {
         font-size: 22px;
@@ -1294,7 +1314,7 @@
     /* ---- Premium mobile hero ---- */
     @media (max-width: 480px) {
       .hero {
-        padding: 70px 0 24px;
+        padding: calc(70px + env(safe-area-inset-top)) 0 24px;
       }
       .hero-banner-container {
         margin-bottom: 1.25rem;
@@ -1307,6 +1327,13 @@
       .hero-sub {
         font-size: 0.875rem;
         max-width: 90%;
+      }
+    }
+
+    @media (max-width: 375px) {
+      .ios-segment {
+        font-size: 0.75rem;
+        padding: 5px 2px;
       }
     }
 
@@ -1324,6 +1351,10 @@
       .polaroid:active {
         transform: translateY(-2px) scale(1.01) !important;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+      }
+      .cat-card:active {
+        transform: scale(0.97);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
       }
     }
 
@@ -1782,15 +1813,18 @@
       });
       
       if (carousel) {
-        var cardWidth = window.innerWidth >= 769 ? 280 + 16 : 170 + 16;
+        var cards = carousel.querySelectorAll('.cat-card');
         var targetScroll = 0;
-        if (index > 0) {
-          var cardIndex = index - 1;
+        if (index > 0 && cards.length > 0) {
+          var cardIndex = 0;
           if (index === 1) cardIndex = 0; // Earrings
-          if (index === 2) cardIndex = 1; // Ad Stone Necklaces
-          if (index === 3) cardIndex = 2; // Harams
-          if (index === 4) cardIndex = 4; // Bangles
-          targetScroll = cardIndex * cardWidth;
+          else if (index === 2) cardIndex = 1; // Ad Stone Necklaces
+          else if (index === 3) cardIndex = 2; // Harams
+          else if (index === 4) cardIndex = 4; // Bangles
+          
+          if (cards[cardIndex]) {
+            targetScroll = cards[cardIndex].offsetLeft - cards[0].offsetLeft;
+          }
         }
         carousel.scrollTo({ left: targetScroll, behavior: 'smooth' });
       }
@@ -1887,12 +1921,13 @@
       var arrowRight = document.getElementById('carousel-arrow-right');
 
       if (carousel) {
-        var cardWidth = 280 + 16;
-        function updateCardWidth() {
-          cardWidth = window.innerWidth >= 769 ? 280 + 16 : 170 + 16;
+        function getScrollStep() {
+          var cards = carousel.querySelectorAll('.cat-card');
+          if (cards.length > 1) {
+            return cards[1].offsetLeft - cards[0].offsetLeft;
+          }
+          return cards.length > 0 ? cards[0].offsetWidth + 16 : 280 + 24;
         }
-        updateCardWidth();
-        window.addEventListener('resize', updateCardWidth, { passive: true });
 
         function updateFade() {
           if (fadeLeft) {
@@ -1939,15 +1974,33 @@
 
               // Update active Segmented Control item dynamically on scroll (mobile only)
               if (window.innerWidth <= 768) {
+                var cards = carousel.querySelectorAll('.cat-card');
+                var closestCardIdx = 0;
+                var minDiff = Infinity;
                 var scrollLeft = carousel.scrollLeft;
-                var activeIdx = Math.round(scrollLeft / cardWidth);
-                var segIdx = 0;
-                if (scrollLeft > 10) {
-                  if (activeIdx === 0) segIdx = 1;
-                  else if (activeIdx === 1 || activeIdx === 3) segIdx = 2;
-                  else if (activeIdx === 2) segIdx = 3;
-                  else if (activeIdx === 4) segIdx = 4;
+
+                if (scrollLeft < 15) {
+                  closestCardIdx = -1; // Highlights segment 0 ("All")
+                } else {
+                  for (var i = 0; i < cards.length; i++) {
+                    var cardOffset = cards[i].offsetLeft - cards[0].offsetLeft;
+                    var diff = Math.abs(cardOffset - scrollLeft);
+                    if (diff < minDiff) {
+                      minDiff = diff;
+                      closestCardIdx = i;
+                    }
+                  }
                 }
+
+                var segIdx = 0;
+                if (closestCardIdx !== -1) {
+                  if (closestCardIdx === 0) segIdx = 1; // Earrings
+                  else if (closestCardIdx === 1) segIdx = 2; // Ad Stone Necklaces
+                  else if (closestCardIdx === 2) segIdx = 3; // Harams
+                  else if (closestCardIdx === 3) segIdx = 2; // Necklaces
+                  else if (closestCardIdx === 4) segIdx = 4; // Bangles
+                }
+
                 var segments = document.querySelectorAll('.ios-segment');
                 segments.forEach(function(s, idx) {
                   if (idx === segIdx) {
@@ -1975,12 +2028,12 @@
 
         if (arrowLeft) {
           arrowLeft.addEventListener('click', function () {
-            carousel.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+            carousel.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
           });
         }
         if (arrowRight) {
           arrowRight.addEventListener('click', function () {
-            carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
+            carousel.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
           });
         }
       }
