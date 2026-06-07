@@ -129,8 +129,8 @@
       --accent: var(--brand-maroon);
       --muted: var(--muted-grey);
 
-      --radius-sm: 10px;
-      --radius-md: 16px;
+      --radius-sm: 6px;
+      --radius-md: 12px;
       --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.03);
       --shadow-hover: 0 10px 24px rgba(0, 0, 0, 0.08);
       --hairline: rgba(34, 11, 27, 0.08);
@@ -210,12 +210,7 @@
       align-items: center;
     }
 
-    .ios-nav-logo {
-      height: 28px;
-      width: auto;
-      object-fit: contain;
-      mix-blend-mode: multiply;
-    }
+
 
     .ios-nav-title {
       font-family: 'Cinzel', serif;
@@ -240,36 +235,40 @@
     }
 
 
-    /* ---- iOS SEGMENTED CONTROL ---- */
+    /* ---- MINIMALIST SEGMENTED TABS ---- */
     .ios-segmented-control {
       display: flex;
-      background: rgba(34, 11, 27, 0.05);
-      border-radius: 10px;
-      padding: 2px;
+      justify-content: center;
+      gap: 12px;
       margin: 24px auto 32px;
-      width: min(100%, 450px);
-      border: 0.5px solid rgba(34, 11, 27, 0.04);
+      width: min(100%, 500px);
+      overflow-x: auto;
+      padding: 4px 16px;
+      scrollbar-width: none;
     }
+    .ios-segmented-control::-webkit-scrollbar { display: none; }
 
     .ios-segment {
-      flex: 1;
+      flex: 0 0 auto;
       background: transparent;
-      border: none;
-      border-radius: 8px;
-      padding: 6px 4px;
+      border: 1px solid rgba(91, 43, 30, 0.15);
+      border-radius: 20px;
+      padding: 8px 20px;
       font-size: 0.85rem;
       font-weight: 500;
-      color: var(--deep-black);
+      color: var(--muted-grey);
       cursor: pointer;
       text-align: center;
-      transition: background-color 0.2s, box-shadow 0.2s, color 0.2s;
+      transition: all 0.3s ease;
+      white-space: nowrap;
     }
 
     .ios-segment.active {
-      background: #FFFFFF;
-      color: var(--brand-maroon);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-      font-weight: 600;
+      background: var(--brand-maroon);
+      color: #FFFFFF;
+      border-color: var(--brand-maroon);
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(91, 43, 30, 0.15);
     }
 
     /* ---- iOS SHEET BOTTOM MODAL ---- */
@@ -277,8 +276,8 @@
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       z-index: 200;
       opacity: 0;
       visibility: hidden;
@@ -528,11 +527,33 @@
       padding: calc(90px + env(safe-area-inset-top)) 0 40px; /* Offset for top navbar + safe area */
       min-height: 100vh;
       min-height: 100dvh;
+      overflow: hidden;
     }
 
+    .banner-motif {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.3;
+      z-index: 0;
+    }
+
+    .banner-motif--tr {
+      top: -40px;
+      right: -60px;
+      width: min(420px, 55vw);
+      transform: rotate(0deg);
+    }
+
+    .banner-motif--bl {
+      bottom: -60px;
+      left: -80px;
+      width: min(380px, 50vw);
+      transform: rotate(180deg);
+    }
     .hero-logo-wrap {
       margin-bottom: 1.25rem;
       text-align: center;
+      z-index: 1;
     }
 
     .hero-logo-img {
@@ -554,21 +575,31 @@
     }
 
     .hero-banner-container {
+      position: relative;
+      z-index: 1;
       width: min(calc(100% - 2rem), 480px);
       margin-bottom: 2rem;
-      border-radius: 20px;
+      border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 16px 40px rgba(91, 43, 30, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
-      border: 0.5px solid rgba(91, 43, 30, 0.12);
+      box-shadow: 0 12px 32px rgba(91, 43, 30, 0.1), 0 4px 12px rgba(0, 0, 0, 0.04);
+      border: 0.5px solid rgba(91, 43, 30, 0.15);
+    }
+
+    @keyframes slowZoomOut {
+      from { transform: scale(1.15); opacity: 0.8; }
+      to   { transform: scale(1); opacity: 1; }
     }
 
     .hero-banner-container img {
       width: 100%;
       height: auto;
       display: block;
+      animation: slowZoomOut 1.8s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
     .hero-inner {
+      position: relative;
+      z-index: 1;
       text-align: center;
       width: min(calc(100% - 2rem), 800px);
       margin: 0 auto;
@@ -578,7 +609,7 @@
     }
 
     .hero-title {
-      font-size: 1.75rem;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
       line-height: 1.3;
       font-weight: 600;
       color: var(--brand-maroon);
@@ -589,7 +620,7 @@
     .hero-sub {
       margin-top: 10px;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
+      font-size: clamp(1.1rem, 3vw, 1.4rem);
       font-weight: 400;
       font-style: italic;
       line-height: 1.6;
@@ -620,25 +651,70 @@
 
     .cta-primary {
       position: relative;
-      margin-top: 24px;
+      margin-top: 32px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
-      padding: 14px 28px;
+      padding: 16px 36px;
       background: var(--brand-maroon);
       color: #FFFFFF;
-      border-radius: 24px;
+      border-radius: 4px;
       font-size: 0.95rem;
-      font-weight: 600;
-      border: none;
-      box-shadow: 0 4px 12px rgba(91, 43, 30, 0.2);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      box-shadow: 0 8px 24px rgba(91, 43, 30, 0.15);
       overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
     }
 
     .cta-primary:hover,
     .cta-primary:focus-visible {
       background: var(--maroon-hover);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 28px rgba(91, 43, 30, 0.25), 0 0 10px rgba(212, 175, 55, 0.2);
+      border-color: rgba(212, 175, 55, 0.6);
+    }
+
+    .cta-primary::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 45%;
+      height: 100%;
+      background: linear-gradient(
+        120deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.25) 50%,
+        transparent 100%
+      );
+      transform: skewX(-20deg);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .cta-primary:hover::after,
+    .cta-primary:focus-visible::after {
+      opacity: 1;
+      animation: shimmer-sweep 0.85s ease-in-out;
+    }
+
+    @keyframes shimmer-sweep {
+      0% { left: -100%; }
+      100% { left: 110%; }
+    }
+
+    .cta-arrow {
+      display: inline-block;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .cta-primary:hover .cta-arrow {
+      transform: translateX(5px);
     }
 
     .cta-primary:active,
@@ -687,9 +763,10 @@
     .section-heading {
       text-align: center;
       color: var(--ink-strong);
-      font-size: 1.75rem;
+      font-size: 2rem;
       line-height: 1.2;
       font-weight: 500;
+      letter-spacing: 0.02em;
     }
 
     .section-rule {
@@ -723,7 +800,6 @@
       padding: 0 20px;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
-      scroll-behavior: smooth;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       -ms-overflow-style: none;
@@ -745,13 +821,17 @@
       scroll-snap-align: start;
       display: block;
       background: #FFFFFF;
-      border-radius: var(--radius-md);
-      box-shadow: 0 8px 24px rgba(91, 43, 30, 0.06);
-      border: 0.5px solid rgba(91, 43, 30, 0.08);
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(91, 43, 30, 0.04);
+      border: 0.5px solid rgba(91, 43, 30, 0.15);
       overflow: hidden;
       padding: 12px;
       text-decoration: none;
-      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                  box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                  opacity 0.4s ease, 
+                  border-color 0.4s ease;
+      will-change: transform, opacity;
     }
 
     @media (min-width: 768px) {
@@ -764,8 +844,9 @@
     @media (min-width: 769px) {
       .cat-card:hover,
       .cat-card:focus-visible {
-        transform: translateY(-4px) scale(1) !important;
-        box-shadow: var(--shadow-hover) !important;
+        transform: translateY(-8px) scale(1.04) !important;
+        box-shadow: 0 16px 36px rgba(91, 43, 30, 0.12) !important;
+        border-color: rgba(212, 175, 55, 0.5) !important;
         opacity: 1 !important;
       }
     }
@@ -902,12 +983,13 @@
       gap: 0.5rem;
       padding: 12px 28px;
       background: transparent;
-      border: 1.5px solid var(--brand-maroon);
+      border: 1px solid var(--brand-maroon);
       color: var(--brand-maroon);
-      border-radius: 24px;
+      border-radius: 4px;
       font-size: 0.95rem;
-      font-weight: 600;
-      letter-spacing: 0.01em;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
       transition: transform 0.15s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
@@ -940,9 +1022,10 @@
       font-family: 'Cinzel', serif;
       font-weight: 500;
       color: var(--brand-maroon);
-      font-size: 28px;
+      font-size: 32px;
       line-height: 1.2;
       margin: 0;
+      letter-spacing: 0.02em;
     }
 
     .reviews-subtext {
@@ -956,59 +1039,78 @@
       max-width: 480px;
     }
 
-    .reviews-grid {
-      margin-top: 32px;
+    .reviews-lookbook {
+      margin-top: 48px;
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 24px;
-      justify-content: center;
-      align-items: center;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      align-items: start;
     }
 
-    .polaroid {
+    .lookbook-item {
+      position: relative;
       display: block;
-      width: 100%;
-      background: #FFFFFF;
-      padding: 10px 10px 20px;
-      border-radius: 16px;
-      border: 0.5px solid rgba(34, 11, 27, 0.08);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-      cursor: pointer;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(91, 43, 30, 0.05);
+      border: 0.5px solid rgba(91, 43, 30, 0.1);
       text-decoration: none;
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .polaroid__img {
+    /* Staggered layout */
+    .lookbook-item:nth-child(even) {
+      margin-top: 32px;
+    }
+
+    .lookbook__img {
       display: block;
       width: 100%;
       height: auto;
-      border-radius: 12px;
+      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* iOS clean stack layout overrides for reviews */
-    .polaroid--1, .polaroid--2, .polaroid--3, .polaroid--4 {
-      transform: none;
+    .lookbook-item:hover .lookbook__img {
+      transform: scale(1.06);
     }
 
-    .polaroid:hover,
-    .polaroid:focus-visible {
-      transform: translateY(-4px) scale(1.02);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    .lookbook-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 32px 16px 16px;
+      background: linear-gradient(to top, rgba(41, 21, 17, 0.85), transparent);
+      color: #F8E8D4;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      text-align: left;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .lookbook-item:hover .lookbook-caption {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .reviews-link-wrap {
-      margin-top: 32px;
+      margin-top: 48px;
     }
 
     .reviews-link {
       display: inline-block;
       font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      font-weight: 600;
+      font-weight: 500;
       font-size: 15px;
       color: var(--brand-maroon);
       text-decoration: none;
-      border-bottom: 1px solid transparent;
+      border-bottom: 1px solid rgba(91, 43, 30, 0.3);
+      padding-bottom: 2px;
       transition: border-color 0.2s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
     .reviews-link:hover,
@@ -1020,24 +1122,25 @@
       .reviews-heading {
         font-size: 40px;
       }
-      .reviews-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 24px;
+      .reviews-lookbook {
+        gap: 32px;
+      }
+      .lookbook-item:nth-child(even) {
+        margin-top: 64px;
+      }
+      .lookbook-caption {
+        font-size: 1.2rem;
+        padding: 40px 24px 24px;
       }
     }
 
     @media (max-width: 768px) {
-      .reviews-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        padding: 0 8px;
-      }
-      .polaroid {
-        padding: 6px 6px 12px;
-        border-radius: 12px;
-      }
-      .polaroid__img {
-        border-radius: 8px;
+      .lookbook-caption {
+        opacity: 1;
+        transform: translateY(0);
+        background: linear-gradient(to top, rgba(41, 21, 17, 0.75), transparent);
+        padding: 24px 12px 12px;
+        font-size: 0.95rem;
       }
     }
 
@@ -1056,113 +1159,220 @@
       transform: translateY(0);
     }
 
+    /* ============ FOOTER REDESIGN ============ */
     .footer {
       position: relative;
-      background: var(--deep-black);
+      background: radial-gradient(circle at top right, #331A14, #1C0F0C); /* rich luxury brand background */
+      border-top: 3px double rgba(212, 175, 55, 0.25); /* luxury double gold border */
       color: var(--cream);
-      padding: 48px 16px;
+      padding: 80px 24px 40px;
       overflow: hidden;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
-    .footer-inner {
+    .footer-motif {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.05; /* subtle watermark */
+      z-index: 0;
+    }
+
+    .footer-motif--left {
+      bottom: -60px;
+      left: -60px;
+      width: min(300px, 45vw);
+      transform: rotate(45deg);
+    }
+
+    .footer-motif--right {
+      top: -40px;
+      right: -60px;
+      width: min(300px, 45vw);
+      transform: rotate(225deg);
+    }
+
+    .footer-grid {
       position: relative;
-      z-index: 2;
+      z-index: 1;
       width: 100%;
-      max-width: 720px;
+      max-width: 1100px;
       margin: 0 auto;
-      text-align: center;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      text-align: left;
     }
 
-    .footer-logo {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+    @media (min-width: 768px) {
+      .footer-grid {
+        grid-template-columns: 1.5fr 1fr 1fr 1fr;
+        gap: 48px;
+      }
+      .footer {
+        padding: 100px 48px 40px;
+      }
+    }
+
+    .footer-logo-text {
+      font-family: 'Cinzel', serif;
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      color: #FFFFFF;
       margin-bottom: 12px;
     }
 
-    .footer-logo img,
-    .footer-logo__img {
-      height: 60px;
-      width: auto;
-      filter: grayscale(1) invert(1) contrast(2);
-      mix-blend-mode: screen;
-      display: block;
-      margin: 0 auto;
-    }
-
     .footer-copy {
-      margin-top: 12px;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-weight: 400;
       font-style: italic;
-      color: rgba(248, 232, 212, 0.9);
-      letter-spacing: 0.03em;
+      color: rgba(253, 245, 235, 0.7);
+      line-height: 1.4;
+      margin: 0 0 12px;
+    }
+
+    .footer-about {
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: rgba(253, 245, 235, 0.55);
+      margin: 0;
+      max-width: 320px;
+    }
+
+    .footer-heading {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #FFFFFF;
+      margin: 0 0 24px;
+    }
+
+    .footer-links-group {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
 
     .footer-link {
+      position: relative;
       display: inline-block;
-      margin-top: 8px;
-      color: var(--cream);
-      font-size: 1rem;
-      font-weight: 500;
-      border-bottom: 1px solid rgba(240, 228, 208, 0.35);
+      color: rgba(253, 245, 235, 0.7);
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      width: fit-content;
       padding-bottom: 2px;
+    }
+
+    .footer-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 1px;
+      bottom: 0;
+      left: 0;
+      background-color: rgba(212, 175, 55, 0.5); /* elegant gold underline */
+      transition: width 0.3s ease;
     }
 
     .footer-link:hover,
     .footer-link:focus-visible {
-      border-bottom-color: var(--cream);
+      color: #FFFFFF;
+    }
+
+    .footer-link:hover::after,
+    .footer-link:focus-visible::after {
+      width: 100%;
+    }
+
+    .footer-info {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-info-item {
+      font-size: 0.9rem;
+      margin: 0;
+      color: rgba(253, 245, 235, 0.7);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .footer-social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(253, 245, 235, 0.06);
+      color: rgba(253, 245, 235, 0.75);
+      border: 1px solid rgba(253, 245, 235, 0.12);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .footer-social-link:hover,
+    .footer-social-link:focus-visible {
+      background: var(--brand-maroon);
+      border-color: var(--brand-maroon);
+      color: #FFFFFF;
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .footer-social-link svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+      transition: fill 0.3s ease;
+    }
+
+    .footer-bottom {
+      width: 100%;
+      max-width: 1100px;
+      margin: 64px auto 0;
+      padding-top: 24px;
+      border-top: 0.5px solid rgba(253, 245, 235, 0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    @media (min-width: 768px) {
+      .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+      }
     }
 
     .footer-meta {
-      margin-top: 8px;
-      font-size: 0.8125rem;
-      color: rgba(240, 228, 208, 0.55);
+      margin: 0;
+      font-size: 0.85rem;
+      color: rgba(253, 245, 235, 0.5);
     }
 
     .footer-credit {
-      margin-top: 20px;
-      font-size: 11px;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      font-weight: 400;
-      color: var(--muted-grey);
+      margin: 0;
+      font-size: 0.8rem;
     }
 
     .footer-credit a {
-      color: var(--muted-grey);
+      color: rgba(253, 245, 235, 0.4);
       text-decoration: none;
       transition: color 0.2s ease;
     }
 
-    .footer-credit a:hover,
-    .footer-credit a:focus-visible {
-      color: var(--cream);
-    }
-
-    .footer-social {
-      margin-top: 16px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .footer-social__link {
-      font-size: 0.875rem;
-      color: rgba(240, 228, 208, 0.75);
-      transition: color 0.2s ease;
-    }
-
-    .footer-social__link:hover,
-    .footer-social__link:focus-visible {
-      color: var(--cream-soft);
-    }
-
-    .footer-social__sep {
-      color: rgba(240, 228, 208, 0.35);
-      font-size: 0.875rem;
+    .footer-credit a:hover {
+      color: rgba(253, 245, 235, 0.8);
     }
 
     .visually-hidden {
@@ -1261,8 +1471,22 @@
       .section-heading {
         font-size: 1.5rem;
       }
+      .carousel {
+        padding: 0 10%;
+        scroll-snap-type: x mandatory;
+      }
       .cat-card {
-        flex: 0 0 200px;
+        flex: 0 0 80%;
+        scroll-snap-align: center;
+      }
+      .reviews-lookbook {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        max-width: 320px;
+        margin-inline: auto;
+      }
+      .lookbook-item:nth-child(even) {
+        margin-top: 0;
       }
       .reviews-heading {
         font-size: 22px;
@@ -1349,7 +1573,7 @@
       }
       .hero-banner-container {
         margin-bottom: 1.25rem;
-        border-radius: 16px;
+        border-radius: 6px;
       }
       .hero-title {
         font-size: 1.65rem;
@@ -1377,7 +1601,7 @@
     }
 
     .cat-card__img {
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     /* ---- Polaroid lift on mobile tap ---- */
@@ -1431,9 +1655,8 @@
   <!-- ============ iOS STICKY NAVBAR ============ -->
   <div class="ios-navbar">
     <div class="ios-navbar-inner">
-      <div class="ios-navbar-left" style="display: flex; align-items: center; gap: 8px;">
-        <img src="logo.png" alt="Sattvika Logo" class="ios-nav-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-        <span class="ios-nav-title" style="display:none;">SATTVIKA JEWELS</span>
+      <div class="ios-navbar-left" style="display: flex; align-items: center;">
+        <span class="ios-nav-title">SATTVIKA JEWELS</span>
       </div>
       <div class="ios-navbar-right">
         <a href="https://wa.me/918078102550" target="_blank" rel="noopener noreferrer" class="ios-nav-btn">Chat</a>
@@ -1476,6 +1699,14 @@
   <main>
     <!-- ============ HERO ============ -->
     <header class="hero" id="hero" aria-labelledby="hero-title">
+      <!-- Decorative background motifs -->
+      <svg class="banner-motif banner-motif--tr" aria-hidden="true">
+        <use href="#banner-motif"/>
+      </svg>
+      <svg class="banner-motif banner-motif--bl" aria-hidden="true">
+        <use href="#banner-motif"/>
+      </svg>
+
       <div class="hero-logo-wrap reveal" style="display:none;">
         <img src="logo.png" alt="Sattvika Jewels Logo" class="hero-logo-img" />
       </div>
@@ -1496,7 +1727,7 @@
           rel="noopener noreferrer"
           aria-label="Browse full catalog on WhatsApp"
         >
-          Browse Full Catalog on WhatsApp →
+          Browse Full Catalog on WhatsApp <span class="cta-arrow">→</span>
         </a>
         
         <a class="hero-secondary-link reveal" href="#" onclick="openOrderSheet(event)">
@@ -1514,17 +1745,17 @@
 
         <!-- ============ iOS SEGMENTED CONTROL ============ -->
         <div class="ios-segmented-control reveal" role="tablist">
-          <button class="ios-segment active" role="tab" aria-selected="true" onclick="filterCategory(0)">All</button>
-          <button class="ios-segment" role="tab" aria-selected="false" onclick="filterCategory(1)">Earrings</button>
-          <button class="ios-segment" role="tab" aria-selected="false" onclick="filterCategory(2)">Necklaces</button>
-          <button class="ios-segment" role="tab" aria-selected="false" onclick="filterCategory(3)">Harams</button>
-          <button class="ios-segment" role="tab" aria-selected="false" onclick="filterCategory(4)">Bangles</button>
+          <button class="ios-segment active" role="tab" aria-selected="true" onclick="selectCategory(0)">Earrings</button>
+          <button class="ios-segment" role="tab" aria-selected="false" onclick="selectCategory(1)">AD Stone</button>
+          <button class="ios-segment" role="tab" aria-selected="false" onclick="selectCategory(2)">Harams</button>
+          <button class="ios-segment" role="tab" aria-selected="false" onclick="selectCategory(3)">Necklaces</button>
+          <button class="ios-segment" role="tab" aria-selected="false" onclick="selectCategory(4)">Bangles</button>
         </div>
 
         <!-- ============ CATEGORY CAROUSEL ============ -->
         <div class="carousel-wrap reveal" role="region" aria-label="Jewelry categories carousel">
           <div class="carousel" id="category-carousel" role="list" aria-label="Jewelry categories">
-            <a class="cat-card" role="listitem" href="https://wa.me/c/918078102550" target="_blank" rel="noopener noreferrer" aria-label="Shop Earrings on WhatsApp">
+            <a class="cat-card" data-category="earrings" role="listitem" href="https://wa.me/c/918078102550" target="_blank" rel="noopener noreferrer" aria-label="Shop Earrings on WhatsApp">
               <div class="cat-card__img-wrap">
                 <img class="cat-card__img" src="category-01.jpg" alt="Sattvika Jewels Earrings Collection" loading="lazy">
               </div>
@@ -1534,7 +1765,7 @@
               </div>
             </a>
 
-            <a class="cat-card" role="listitem" href="https://wa.me/c/918078102550" target="_blank" rel="noopener noreferrer" aria-label="Shop Ad Stone Necklaces on WhatsApp">
+            <a class="cat-card" data-category="necklaces" role="listitem" href="https://wa.me/c/918078102550" target="_blank" rel="noopener noreferrer" aria-label="Shop Ad Stone Necklaces on WhatsApp">
               <div class="cat-card__img-wrap">
                 <img class="cat-card__img" src="category-02.jpg" alt="Sattvika Jewels AD Stone Necklaces" loading="lazy">
               </div>
@@ -1544,7 +1775,7 @@
               </div>
             </a>
 
-            <a class="cat-card" role="listitem" href="https://wa.me/c/918078102550" target="_blank" rel="noopener noreferrer" aria-label="Shop Harams on WhatsApp">
+            <a class="cat-card" data-category="harams" role="listitem" href="https://wa.me/c/918078102550" target="_blank" rel="noopener noreferrer" aria-label="Shop Harams on WhatsApp">
               <div class="cat-card__img-wrap">
                 <img class="cat-card__img" src="category-03.jpg" alt="Sattvika Jewels Harams Collection" loading="lazy">
               </div>
@@ -1554,7 +1785,7 @@
               </div>
             </a>
 
-            <a class="cat-card" role="listitem" href="https://wa.me/c/918078102550" target="_blank" rel="noopener noreferrer" aria-label="Shop Necklaces on WhatsApp">
+            <a class="cat-card" data-category="necklaces" role="listitem" href="https://wa.me/c/918078102550" target="_blank" rel="noopener noreferrer" aria-label="Shop Necklaces on WhatsApp">
               <div class="cat-card__img-wrap">
                 <img class="cat-card__img" src="category-04.jpg" alt="Sattvika Jewels Necklaces Collection" loading="lazy">
               </div>
@@ -1564,7 +1795,7 @@
               </div>
             </a>
 
-            <a class="cat-card" role="listitem" href="https://wa.me/c/918078102550" target="_blank" rel="noopener noreferrer" aria-label="Shop Bangles on WhatsApp">
+            <a class="cat-card" data-category="bangles" role="listitem" href="https://wa.me/c/918078102550" target="_blank" rel="noopener noreferrer" aria-label="Shop Bangles on WhatsApp">
               <div class="cat-card__img-wrap">
                 <img class="cat-card__img" src="category-05.jpg" alt="Sattvika Jewels Handcrafted Bangles" loading="lazy">
               </div>
@@ -1675,25 +1906,29 @@
         <h2 class="reviews-heading reveal">What Our Customers Say</h2>
         <p class="reviews-subtext reveal">Real messages. Real moments. Real Sattvika.</p>
 
-        <div class="reviews-grid" role="list" aria-label="Customer reviews">
+        <div class="reviews-lookbook" role="list" aria-label="Customer reviews">
           <div class="reveal-review">
-            <a class="polaroid polaroid--1" role="listitem" href="https://www.instagram.com/stories/highlights/17978115308851212/" target="_blank" rel="noopener noreferrer" aria-label="Read review 1">
-              <img class="polaroid__img" src="review-01.jpg" alt="Customer review for Sattvika Jewels necklace and jhumka set" loading="lazy">
+            <a class="lookbook-item" role="listitem" href="https://www.instagram.com/stories/highlights/17978115308851212/" target="_blank" rel="noopener noreferrer" aria-label="Read review 1">
+              <img class="lookbook__img" src="review-01.jpg" alt="Customer review for Sattvika Jewels necklace and jhumka set" loading="lazy">
+              <div class="lookbook-caption">Handcrafted Elegance</div>
             </a>
           </div>
           <div class="reveal-review">
-            <a class="polaroid polaroid--2" role="listitem" href="https://www.instagram.com/stories/highlights/17978115308851212/" target="_blank" rel="noopener noreferrer" aria-label="Read review 2">
-              <img class="polaroid__img" src="review-02.jpg" alt="Customer review for Sattvika Jewels red stone necklace set" loading="lazy">
+            <a class="lookbook-item" role="listitem" href="https://www.instagram.com/stories/highlights/17978115308851212/" target="_blank" rel="noopener noreferrer" aria-label="Read review 2">
+              <img class="lookbook__img" src="review-02.jpg" alt="Customer review for Sattvika Jewels red stone necklace set" loading="lazy">
+              <div class="lookbook-caption">Tradition Restored</div>
             </a>
           </div>
           <div class="reveal-review">
-            <a class="polaroid polaroid--3" role="listitem" href="https://www.instagram.com/stories/highlights/17978115308851212/" target="_blank" rel="noopener noreferrer" aria-label="Read review 3">
-              <img class="polaroid__img" src="review-03.jpg" alt="Customer review for Sattvika Jewels green stone necklace" loading="lazy">
+            <a class="lookbook-item" role="listitem" href="https://www.instagram.com/stories/highlights/17978115308851212/" target="_blank" rel="noopener noreferrer" aria-label="Read review 3">
+              <img class="lookbook__img" src="review-03.jpg" alt="Customer review for Sattvika Jewels green stone necklace" loading="lazy">
+              <div class="lookbook-caption">A Timeless Bond</div>
             </a>
           </div>
           <div class="reveal-review">
-            <a class="polaroid polaroid--4" role="listitem" href="https://www.instagram.com/stories/highlights/17978115308851212/" target="_blank" rel="noopener noreferrer" aria-label="Read review 4">
-              <img class="polaroid__img" src="review-04.jpg" alt="Customer review for Sattvika Jewels bangle" loading="lazy">
+            <a class="lookbook-item" role="listitem" href="https://www.instagram.com/stories/highlights/17978115308851212/" target="_blank" rel="noopener noreferrer" aria-label="Read review 4">
+              <img class="lookbook__img" src="review-04.jpg" alt="Customer review for Sattvika Jewels bangle" loading="lazy">
+              <div class="lookbook-caption">The Perfect Finish</div>
             </a>
           </div>
         </div>
@@ -1707,29 +1942,51 @@
 
   <!-- ============ FOOTER ============ -->
   <footer class="footer" role="contentinfo">
-    <div class="footer-inner">
-      <div class="footer-logo" aria-label="Sattvika Jewels footer logo">
-        <img
-          class="footer-logo__img"
-          src="logo.png"
-          alt="Sattvika Jewels Logo"
-          loading="lazy"
-          width="420"
-          height="140"
-        />
+    <!-- Decorative background motifs in footer -->
+    <svg class="footer-motif footer-motif--left" aria-hidden="true">
+      <use href="#banner-motif"/>
+    </svg>
+    <svg class="footer-motif footer-motif--right" aria-hidden="true">
+      <use href="#banner-motif"/>
+    </svg>
+
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo-text" aria-label="Sattvika Jewels">SATTVIKA JEWELS</div>
+        <p class="footer-copy">Timeless Fine Jewelry. Rooted in Tradition.</p>
+        <p class="footer-about">
+          Handcrafted Indian jewelry celebrating our rich cultural heritage. Meticulously designed traditional necklaces, earrings, bangles, and harams crafted for modern elegance.
+        </p>
+      </div>
+      
+      <div class="footer-links-group">
+        <h4 class="footer-heading">Collections</h4>
+        <a href="https://wa.me/c/918078102550" target="_blank" rel="noopener noreferrer" class="footer-link">Earrings Collection</a>
+        <a href="https://wa.me/c/918078102550" target="_blank" rel="noopener noreferrer" class="footer-link">AD Stone Necklaces</a>
+        <a href="https://wa.me/c/918078102550" target="_blank" rel="noopener noreferrer" class="footer-link">Harams & Necklaces</a>
+        <a href="https://wa.me/c/918078102550" target="_blank" rel="noopener noreferrer" class="footer-link">Handcrafted Bangles</a>
       </div>
 
-      <p class="footer-copy">Timeless Jewelry. Rooted in Tradition.</p>
-
-      <div class="footer-social" role="navigation" aria-label="Sattvika Jewels social links">
-        <a href="https://www.instagram.com/sattvika_jewels/" target="_blank" rel="noopener noreferrer" class="footer-social__link">Instagram →</a>
-        <span class="footer-social__sep" aria-hidden="true">·</span>
-        <a href="https://www.instagram.com/stories/highlights/17978115308851212/" target="_blank" rel="noopener noreferrer" class="footer-social__link">Reviews →</a>
-        <span class="footer-social__sep" aria-hidden="true">·</span>
-        <a href="https://www.instagram.com/stories/highlights/17924511911980462/" target="_blank" rel="noopener noreferrer" class="footer-social__link">How to Order →</a>
+      <div class="footer-links-group">
+        <h4 class="footer-heading">Customer Care</h4>
+        <a href="#" onclick="openOrderSheet(event)" class="footer-link">How to Order Guide</a>
+        <a href="https://www.instagram.com/stories/highlights/17978115308851212/" target="_blank" rel="noopener noreferrer" class="footer-link">Client Reviews</a>
+        <a href="https://wa.me/918078102550" target="_blank" rel="noopener noreferrer" class="footer-link">Direct WhatsApp Shop</a>
       </div>
 
-      <a class="footer-link" href="https://wa.me/918078102550" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
+      <div class="footer-links-group">
+        <h4 class="footer-heading">Connect</h4>
+        <div class="footer-info">
+          <p class="footer-info-item">📍 Kerala, India</p>
+          <p class="footer-info-item">📞 +91 80781 02550</p>
+          <a href="https://www.instagram.com/sattvika_jewels/" target="_blank" rel="noopener noreferrer" class="footer-link">@sattvika_jewels</a>
+        </div>
+        <div class="footer-social">
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
       <p class="footer-meta">© 2026 Sattvika Jewels. All rights reserved.</p>
       <p class="footer-credit">
         <a href="https://apexandaxis.org" target="_blank" rel="noopener noreferrer">Architected by apexandaxis.org</a>
@@ -1839,34 +2096,9 @@
     }
 
     // ---- Segmented control slider scroll connection ----
-    function filterCategory(index) {
-      var carousel = document.getElementById('category-carousel');
-      var segments = document.querySelectorAll('.ios-segment');
-      segments.forEach(function(s, idx) {
-        if (idx === index) {
-          s.classList.add('active');
-          s.setAttribute('aria-selected', 'true');
-        } else {
-          s.classList.remove('active');
-          s.setAttribute('aria-selected', 'false');
-        }
-      });
-      
-      if (carousel) {
-        var cards = carousel.querySelectorAll('.cat-card');
-        var targetScroll = 0;
-        if (index > 0 && cards.length > 0) {
-          var cardIndex = 0;
-          if (index === 1) cardIndex = 0; // Earrings
-          else if (index === 2) cardIndex = 1; // Ad Stone Necklaces
-          else if (index === 3) cardIndex = 2; // Harams
-          else if (index === 4) cardIndex = 4; // Bangles
-          
-          if (cards[cardIndex]) {
-            targetScroll = cards[cardIndex].offsetLeft - cards[0].offsetLeft;
-          }
-        }
-        carousel.scrollTo({ left: targetScroll, behavior: 'smooth' });
+    function selectCategory(index) {
+      if (typeof window.selectCategoryGlobal === 'function') {
+        window.selectCategoryGlobal(index);
       }
     }
 
@@ -1961,12 +2193,48 @@
       var arrowRight = document.getElementById('carousel-arrow-right');
 
       if (carousel) {
-        function getScrollStep() {
-          var cards = carousel.querySelectorAll('.cat-card');
-          if (cards.length > 1) {
-            return cards[1].offsetLeft - cards[0].offsetLeft;
+        var originalCards = Array.prototype.slice.call(carousel.querySelectorAll('.cat-card'));
+        
+        // Clone original cards and prepend
+        var prependFragment = document.createDocumentFragment();
+        originalCards.forEach(function(card) {
+          var clone = card.cloneNode(true);
+          clone.classList.add('is-clone');
+          prependFragment.appendChild(clone);
+        });
+        carousel.insertBefore(prependFragment, carousel.firstChild);
+
+        // Clone original cards and append
+        var appendFragment = document.createDocumentFragment();
+        originalCards.forEach(function(card) {
+          var clone = card.cloneNode(true);
+          clone.classList.add('is-clone');
+          appendFragment.appendChild(clone);
+        });
+        carousel.appendChild(appendFragment);
+
+        var cardPositions = [];
+        var loopWidth = 0;
+
+        function cachePositions() {
+          cardPositions = [];
+          var cards = carousel.children;
+          var carouselRect = carousel.getBoundingClientRect();
+          var scrollLeft = carousel.scrollLeft;
+
+          for (var i = 0; i < cards.length; i++) {
+            var card = cards[i];
+            var cardLeftInScrollContainer = card.getBoundingClientRect().left - carouselRect.left + scrollLeft;
+            var targetScroll = cardLeftInScrollContainer - (carousel.clientWidth - card.offsetWidth) / 2;
+            cardPositions.push({
+              targetScroll: targetScroll,
+              center: cardLeftInScrollContainer + card.offsetWidth / 2
+            });
           }
-          return cards.length > 0 ? cards[0].offsetWidth + 16 : 280 + 24;
+
+          if (cards.length >= 11) {
+            loopWidth = cardPositions[10].targetScroll - cardPositions[5].targetScroll;
+          }
         }
 
         function updateFade() {
@@ -1980,21 +2248,28 @@
         }
 
         function updateCarouselScale() {
+          var scrollLeft = carousel.scrollLeft;
+          var viewportWidth = carousel.clientWidth;
+          var viewportCenter = scrollLeft + viewportWidth / 2;
+
           if (window.innerWidth <= 768) {
-            Array.prototype.slice.call(carousel.children).forEach(function (card) {
+            var cards = carousel.children;
+            for (var i = 0; i < cards.length; i++) {
+              var card = cards[i];
               card.style.transform = '';
               card.style.opacity = '';
               card.style.boxShadow = '';
-            });
+            }
             return;
           }
-          var carouselRect = carousel.getBoundingClientRect();
-          var carouselCenter = carouselRect.left + (carouselRect.width / 2);
-          Array.prototype.slice.call(carousel.children).forEach(function (card) {
-            var cardRect = card.getBoundingClientRect();
-            var cardCenter = cardRect.left + (cardRect.width / 2);
-            var dist = Math.abs(carouselCenter - cardCenter);
-            var maxDist = carouselRect.width / 1.5;
+
+          var cards = carousel.children;
+          var maxDist = viewportWidth / 1.5;
+
+          for (var i = 0; i < cards.length; i++) {
+            if (!cardPositions[i]) continue;
+            var card = cards[i];
+            var dist = Math.abs(viewportCenter - cardPositions[i].center);
             var ratio = Math.min(dist / maxDist, 1);
             var scale = 1 - (ratio * 0.12);
             var opacity = 1 - (ratio * 0.4);
@@ -2002,45 +2277,80 @@
             card.style.transform = 'scale(' + scale + ')';
             card.style.opacity = opacity;
             card.style.boxShadow = '0 16px 40px rgba(0, 0, 0, ' + shadowAlpha + ')';
-          });
+          }
         }
+
+        // Initialize positions
+        cachePositions();
+        
+        // Align scroll to index 5 initially
+        if (cardPositions[5]) {
+          carousel.scrollLeft = cardPositions[5].targetScroll;
+        }
+
+        // Safeguard delayed initialization
+        setTimeout(function() {
+          cachePositions();
+          if (cardPositions[5]) {
+            carousel.scrollLeft = cardPositions[5].targetScroll;
+          }
+          updateCarouselScale();
+        }, 50);
 
         var carouselTicking = false;
         carousel.addEventListener('scroll', function () {
           if (!carouselTicking) {
             window.requestAnimationFrame(function () {
               updateFade();
-              updateCarouselScale();
+              
+              var currentScroll = carousel.scrollLeft;
+              var closestIndex = -1;
+              var minDiff = Infinity;
 
-              // Update active Segmented Control item dynamically on scroll (mobile only)
-              if (window.innerWidth <= 768) {
-                var cards = carousel.querySelectorAll('.cat-card');
-                var closestCardIdx = 0;
-                var minDiff = Infinity;
-                var scrollLeft = carousel.scrollLeft;
+              for (var i = 0; i < cardPositions.length; i++) {
+                var diff = Math.abs(cardPositions[i].targetScroll - currentScroll);
+                if (diff < minDiff) {
+                  minDiff = diff;
+                  closestIndex = i;
+                }
+              }
 
-                if (scrollLeft < 15) {
-                  closestCardIdx = -1; // Highlights segment 0 ("All")
-                } else {
-                  for (var i = 0; i < cards.length; i++) {
-                    var cardOffset = cards[i].offsetLeft - cards[0].offsetLeft;
-                    var diff = Math.abs(cardOffset - scrollLeft);
+              // Perform wrapping jump if needed
+              if (closestIndex !== -1 && loopWidth > 0) {
+                if (closestIndex < 5) {
+                  carousel.scrollLeft += loopWidth;
+                  closestIndex += 5;
+                  // Re-evaluate closest index
+                  currentScroll = carousel.scrollLeft;
+                  minDiff = Infinity;
+                  for (var i = 0; i < cardPositions.length; i++) {
+                    var diff = Math.abs(cardPositions[i].targetScroll - currentScroll);
                     if (diff < minDiff) {
                       minDiff = diff;
-                      closestCardIdx = i;
+                      closestIndex = i;
+                    }
+                  }
+                } else if (closestIndex >= 10) {
+                  carousel.scrollLeft -= loopWidth;
+                  closestIndex -= 5;
+                  // Re-evaluate closest index
+                  currentScroll = carousel.scrollLeft;
+                  minDiff = Infinity;
+                  for (var i = 0; i < cardPositions.length; i++) {
+                    var diff = Math.abs(cardPositions[i].targetScroll - currentScroll);
+                    if (diff < minDiff) {
+                      minDiff = diff;
+                      closestIndex = i;
                     }
                   }
                 }
+              }
 
-                var segIdx = 0;
-                if (closestCardIdx !== -1) {
-                  if (closestCardIdx === 0) segIdx = 1; // Earrings
-                  else if (closestCardIdx === 1) segIdx = 2; // Ad Stone Necklaces
-                  else if (closestCardIdx === 2) segIdx = 3; // Harams
-                  else if (closestCardIdx === 3) segIdx = 2; // Necklaces
-                  else if (closestCardIdx === 4) segIdx = 4; // Bangles
-                }
+              updateCarouselScale();
 
+              // Update Segmented Control active item
+              if (closestIndex >= 5 && closestIndex < 10) {
+                var segIdx = closestIndex - 5;
                 var segments = document.querySelectorAll('.ios-segment');
                 segments.forEach(function(s, idx) {
                   if (idx === segIdx) {
@@ -2060,23 +2370,67 @@
         }, { passive: true });
 
         window.addEventListener('resize', function () {
+          cachePositions();
+          var activeSeg = document.querySelector('.ios-segment.active');
+          if (activeSeg) {
+            var segments = Array.prototype.slice.call(document.querySelectorAll('.ios-segment'));
+            var activeIdx = segments.indexOf(activeSeg);
+            if (activeIdx !== -1 && cardPositions[activeIdx + 5]) {
+              carousel.scrollLeft = cardPositions[activeIdx + 5].targetScroll;
+            }
+          }
           updateCarouselScale();
         }, { passive: true });
 
+        // Force initial scale/fade setup
         updateFade();
         updateCarouselScale();
 
         if (arrowLeft) {
           arrowLeft.addEventListener('click', function () {
-            carousel.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
+            var activeSeg = document.querySelector('.ios-segment.active');
+            var segments = Array.prototype.slice.call(document.querySelectorAll('.ios-segment'));
+            var activeIdx = segments.indexOf(activeSeg);
+            if (activeIdx !== -1) {
+              var prevIdx = activeIdx - 1;
+              if (prevIdx < 0) prevIdx = 4;
+              window.selectCategoryGlobal(prevIdx);
+            }
           });
         }
         if (arrowRight) {
           arrowRight.addEventListener('click', function () {
-            carousel.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
+            var activeSeg = document.querySelector('.ios-segment.active');
+            var segments = Array.prototype.slice.call(document.querySelectorAll('.ios-segment'));
+            var activeIdx = segments.indexOf(activeSeg);
+            if (activeIdx !== -1) {
+              var nextIdx = activeIdx + 1;
+              if (nextIdx > 4) nextIdx = 0;
+              window.selectCategoryGlobal(nextIdx);
+            }
           });
         }
       }
+
+      // Expose globally for onclick attributes
+      window.selectCategoryGlobal = function(index) {
+        if (carousel && cardPositions[index + 5]) {
+          var targetScroll = cardPositions[index + 5].targetScroll;
+          carousel.scrollTo({ left: targetScroll, behavior: 'smooth' });
+          
+          // Instantly highlight clicked segment
+          var segments = document.querySelectorAll('.ios-segment');
+          segments.forEach(function(s, idx) {
+            if (idx === index) {
+              s.classList.add('active');
+              s.setAttribute('aria-selected', 'true');
+            } else {
+              s.classList.remove('active');
+              s.setAttribute('aria-selected', 'false');
+            }
+          });
+        }
+      };
     
       // ---- CTA WhatsApp button ripple animation ----
       var ctaBtn = document.querySelector('.cta-primary');
