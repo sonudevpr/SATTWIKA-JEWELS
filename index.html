@@ -142,6 +142,26 @@
       scroll-behavior: smooth;
     }
 
+    ::selection {
+      background: var(--brand-maroon);
+      color: #FFFFFF;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(91, 43, 30, 0.4);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(91, 43, 30, 0.7);
+    }
+
     * { box-sizing: border-box; }
 
     body {
@@ -190,9 +210,9 @@
       right: 0;
       height: calc(50px + env(safe-area-inset-top));
       padding-top: env(safe-area-inset-top);
-      background: rgba(248, 232, 212, 0.85); /* Translucent cream */
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: rgba(248, 232, 212, 0.65); /* Translucent cream for premium frosted glass */
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
       border-bottom: 0.5px solid rgba(34, 11, 27, 0.08);
       z-index: 100;
       display: flex;
@@ -447,13 +467,15 @@
       margin-top: 20px;
     }
 
-    /* ---- iOS INSET GROUPED SETTINGS LIST ---- */
+    /* ---- LUXURY LIST MENU ---- */
     .ios-list-container {
-      background: #FFFFFF;
-      border-radius: 14px;
+      background: rgba(253, 245, 235, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 12px;
       overflow: hidden;
-      border: 0.5px solid rgba(34, 11, 27, 0.08);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+      border: 0.5px solid rgba(91, 43, 30, 0.15);
+      box-shadow: 0 8px 32px rgba(91, 43, 30, 0.08);
       margin: 32px auto 0;
       max-width: 600px;
     }
@@ -461,9 +483,9 @@
     .ios-row-link {
       display: flex;
       align-items: center;
-      padding: 14px 16px;
-      background: #FFFFFF;
-      border-bottom: 0.5px solid rgba(34, 11, 27, 0.08);
+      padding: 16px 20px;
+      background: transparent;
+      border-bottom: 0.5px solid rgba(91, 43, 30, 0.1);
       transition: background-color 0.2s;
       text-decoration: none;
     }
@@ -473,28 +495,21 @@
     }
 
     .ios-row-link:active {
-      background-color: rgba(34, 11, 27, 0.05);
+      background-color: rgba(91, 43, 30, 0.05);
     }
 
     .ios-row-icon {
-      width: 30px;
-      height: 30px;
-      border-radius: 7px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-right: 12px;
+      margin-right: 16px;
       flex-shrink: 0;
-      color: #FFFFFF;
-    }
-    .ios-row-icon--instagram {
-      background: #E1306C;
-    }
-    .ios-row-icon--reviews {
-      background: #D4AF37;
-    }
-    .ios-row-icon--order {
-      background: var(--brand-maroon);
+      background: transparent;
+      border: 0.5px solid rgba(91, 43, 30, 0.2);
+      color: var(--brand-maroon);
     }
 
     .ios-row-content {
@@ -503,19 +518,24 @@
     }
 
     .ios-row-title {
-      font-size: 0.95rem;
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
       font-weight: 600;
       color: var(--deep-black);
+      letter-spacing: 0.05em;
     }
 
     .ios-row-subtitle {
-      font-size: 0.8rem;
-      color: var(--muted-grey);
-      margin-top: 1px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      font-style: italic;
+      color: rgba(34, 11, 27, 0.65);
+      margin-top: 2px;
     }
 
     .ios-row-arrow {
-      color: rgba(34, 11, 27, 0.3);
+      color: var(--brand-maroon);
+      opacity: 0.3;
       margin-left: 8px;
       display: flex;
       align-items: center;
@@ -534,6 +554,11 @@
       overflow: hidden;
     }
 
+    @keyframes slowRotateMotif {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
     .banner-motif {
       position: absolute;
       pointer-events: none;
@@ -545,14 +570,14 @@
       top: -40px;
       right: -60px;
       width: min(420px, 55vw);
-      transform: rotate(0deg);
+      animation: slowRotateMotif 120s linear infinite;
     }
 
     .banner-motif--bl {
       bottom: -60px;
       left: -80px;
       width: min(380px, 50vw);
-      transform: rotate(180deg);
+      animation: slowRotateMotif 140s linear infinite reverse;
     }
     .hero-logo-wrap {
       margin-bottom: 1.25rem;
@@ -574,7 +599,7 @@
       font-weight: 600;
       color: var(--brand-maroon);
       text-transform: uppercase;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.25em;
       margin-bottom: 12px;
     }
 
@@ -589,16 +614,17 @@
       border: 0.5px solid rgba(91, 43, 30, 0.15);
     }
 
-    @keyframes slowZoomOut {
-      from { transform: scale(1.15); opacity: 0.8; }
-      to   { transform: scale(1); opacity: 1; }
+    @keyframes kenBurns {
+      0% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
 
     .hero-banner-container img {
       width: 100%;
       height: auto;
       display: block;
-      animation: slowZoomOut 1.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation: kenBurns 15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      will-change: transform;
     }
 
     .hero-inner {
@@ -635,17 +661,34 @@
     
     .hero-secondary-link {
       margin-top: 20px;
+      position: relative;
       display: inline-block;
       font-size: 0.95rem;
       color: var(--brand-maroon);
       font-weight: 600;
-      text-decoration: underline;
-      text-underline-offset: 4px;
-      transition: opacity 0.2s ease;
+      text-decoration: none;
+      padding-bottom: 2px;
+      transition: opacity 0.2s ease, transform 0.2s ease;
     }
     
-    .hero-secondary-link:hover {
-      opacity: 0.8;
+    .hero-secondary-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 1.5px;
+      bottom: 0;
+      left: 0;
+      background-color: var(--brand-maroon);
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-secondary-link:hover::after,
+    .hero-secondary-link:focus-visible::after {
+      width: 100%;
+    }
+
+    .hero-secondary-link:active {
+      transform: scale(0.96);
     }
 
     .cta-primary,
@@ -671,49 +714,25 @@
       border: none;
       box-shadow: 0 8px 24px rgba(91, 43, 30, 0.25);
       overflow: hidden;
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
+      transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), 
+                  box-shadow 0.15s cubic-bezier(0.25, 1, 0.5, 1), 
+                  background-color 0.15s ease,
+                  letter-spacing 0.15s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
     .cta-primary:hover,
     .cta-primary:focus-visible {
       background: var(--maroon-hover);
       transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 12px 32px rgba(91, 43, 30, 0.35), 0 0 12px rgba(212, 175, 55, 0.15);
+      letter-spacing: 0.08em;
+      box-shadow: 0 16px 32px rgba(91, 43, 30, 0.35);
     }
 
-    .cta-primary::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 45%;
-      height: 100%;
-      background: linear-gradient(
-        120deg,
-        transparent 0%,
-        rgba(255, 255, 255, 0.25) 50%,
-        transparent 100%
-      );
-      transform: skewX(-20deg);
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.2s ease;
-    }
-
-    .cta-primary:hover::after,
-    .cta-primary:focus-visible::after {
-      opacity: 1;
-      animation: shimmer-sweep 0.85s ease-in-out;
-    }
-
-    @keyframes shimmer-sweep {
-      0% { left: -100%; }
-      100% { left: 110%; }
-    }
+    /* Shimmer sweep replaced by magnetic tracking animation */
 
     .cta-arrow {
       display: inline-block;
-      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
     .cta-primary:hover .cta-arrow {
@@ -728,27 +747,33 @@
     .reveal {
       opacity: 0;
       transform: translateY(30px);
+      filter: blur(8px);
       transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-      will-change: opacity, transform;
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform, filter;
     }
 
     .reveal.is-visible {
       opacity: 1;
       transform: translateY(0);
+      filter: blur(0);
     }
 
     .reveal-card {
       opacity: 0;
       transform: translateY(30px);
+      filter: blur(8px);
       transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-      will-change: opacity, transform;
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform, filter;
     }
 
     .reveal-card.is-visible {
       opacity: 1;
       transform: translateY(0);
+      filter: blur(0);
     }
 
     .showcase {
@@ -766,10 +791,10 @@
     .section-heading {
       text-align: center;
       color: var(--ink-strong);
-      font-size: 2rem;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
       line-height: 1.2;
       font-weight: 500;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.08em;
     }
 
     .section-rule {
@@ -859,6 +884,24 @@
       overflow: hidden;
       background: var(--cream);
       box-shadow: 0 8px 24px rgba(91, 43, 30, 0.08);
+      border: 0.5px solid rgba(91, 43, 30, 0.1);
+    }
+
+    .cat-card__img-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(34, 11, 27, 0.25), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    @media (min-width: 769px) {
+      .cat-card:hover .cat-card__img-wrap::after,
+      .cat-card:focus-visible .cat-card__img-wrap::after {
+        opacity: 1;
+      }
     }
 
     .cat-card__img {
@@ -891,7 +934,7 @@
       font-size: 0.75rem;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.15em;
       margin-top: 4px;
       border-bottom: 1px solid rgba(91, 43, 30, 0.3);
       padding-bottom: 2px;
@@ -1023,7 +1066,7 @@
       font-family: 'Cinzel', serif;
       font-weight: 500;
       color: var(--brand-maroon);
-      font-size: 32px;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
       line-height: 1.2;
       margin: 0;
       letter-spacing: 0.02em;
@@ -1163,34 +1206,15 @@
     /* ============ FOOTER REDESIGN ============ */
     .footer {
       position: relative;
-      background: radial-gradient(circle at top right, #331A14, #1C0F0C); /* rich luxury brand background */
-      border-top: 3px double rgba(212, 175, 55, 0.25); /* luxury double gold border */
+      background: #180A08; /* Extremely rich dark luxury brown/maroon */
+      border-top: 1px solid rgba(253, 245, 235, 0.1); /* Elegant thin line */
       color: var(--cream);
       padding: 80px 24px 40px;
       overflow: hidden;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
-    .footer-motif {
-      position: absolute;
-      pointer-events: none;
-      opacity: 0.05; /* subtle watermark */
-      z-index: 0;
-    }
-
-    .footer-motif--left {
-      bottom: -60px;
-      left: -60px;
-      width: min(300px, 45vw);
-      transform: rotate(45deg);
-    }
-
-    .footer-motif--right {
-      top: -40px;
-      right: -60px;
-      width: min(300px, 45vw);
-      transform: rotate(225deg);
-    }
+    /* Removed .footer-motif classes for minimalism */
 
     .footer-grid {
       position: relative;
@@ -1206,7 +1230,7 @@
 
     @media (min-width: 768px) {
       .footer-grid {
-        grid-template-columns: 1.5fr 1fr 1fr 1fr;
+        grid-template-columns: 1.5fr 1fr 1fr;
         gap: 48px;
       }
       .footer {
@@ -1217,9 +1241,9 @@
     .footer-logo-text {
       font-family: 'Cinzel', serif;
       font-size: 24px;
-      font-weight: 500;
-      letter-spacing: 0.2em;
-      color: #FFFFFF;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      color: rgba(255, 255, 255, 0.95);
       margin-bottom: 12px;
     }
 
@@ -1228,17 +1252,17 @@
       font-size: 1.15rem;
       font-weight: 400;
       font-style: italic;
-      color: rgba(253, 245, 235, 0.7);
+      color: var(--cream);
       line-height: 1.4;
-      margin: 0 0 12px;
+      margin: 0 0 16px;
     }
 
     .footer-about {
-      font-size: 0.85rem;
-      line-height: 1.6;
-      color: rgba(253, 245, 235, 0.55);
+      font-size: 0.8rem;
+      line-height: 1.8;
+      color: rgba(253, 245, 235, 0.5);
       margin: 0;
-      max-width: 320px;
+      max-width: 300px;
     }
 
     .footer-heading {
@@ -1246,9 +1270,9 @@
       font-size: 0.85rem;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #FFFFFF;
-      margin: 0 0 24px;
+      letter-spacing: 0.15em;
+      color: rgba(255, 255, 255, 0.85);
+      margin: 0 0 28px;
     }
 
     .footer-links-group {
@@ -1275,8 +1299,13 @@
       height: 1px;
       bottom: 0;
       left: 0;
-      background-color: rgba(212, 175, 55, 0.5); /* elegant gold underline */
-      transition: width 0.3s ease;
+      background-color: var(--cream);
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .footer-link:hover::after,
+    .footer-link:focus-visible::after {
+      width: 100%;
     }
 
     .footer-link:hover,
@@ -1389,11 +1418,8 @@
     }
 
     @media (min-width: 768px) {
-      .hero-title { font-size: 2.25rem; }
       .hero-logo-img { height: 80px; }
       .hero-banner-container { max-height: 280px; }
-      .hero-sub { font-size: 1.15rem; }
-      .section-heading { font-size: 2.4rem; }
       .section-copy { font-size: 1.1rem; }
     }
 
@@ -1451,13 +1477,11 @@
         height: 48px;
       }
       .hero-title {
-        font-size: 1.85rem;
         max-width: 100%;
         padding: 0 16px;
         line-height: 1.25;
       }
       .hero-sub {
-        font-size: 1.1rem;
         line-height: 1.5;
         margin-top: 10px;
         max-width: 90%;
@@ -1477,7 +1501,6 @@
         font-size: 0.9rem;
       }
       .section-heading {
-        font-size: 1.8rem;
         padding: 0 16px;
       }
       .ios-segmented-control {
@@ -1514,10 +1537,13 @@
         font-size: 1.8rem;
       }
       .footer {
-        padding: 60px 20px 30px;
+        padding: 48px 20px 24px;
       }
       .footer-grid {
-        gap: 32px;
+        gap: 28px;
+      }
+      .footer-about {
+        display: none;
       }
       .footer-logo-text {
         font-size: 20px;
@@ -1578,12 +1604,12 @@
     .cta-short-text { display: none; }
     .cta-full-text  { display: inline; }
 
-    @media (max-width: 420px) {
+    @media (max-width: 480px) {
       .cta-full-text  { display: none; }
       .cta-short-text { display: inline; }
       .cta-primary {
-        padding: 14px 20px;
-        font-size: 0.9rem;
+        padding: 16px 24px;
+        font-size: 0.95rem;
         white-space: nowrap;
         max-width: 100%;
       }
@@ -1749,7 +1775,7 @@
           rel="noopener noreferrer"
           aria-label="Browse full catalog on WhatsApp"
         >
-          Browse Full Catalog on WhatsApp <span class="cta-arrow">→</span>
+          <span class="cta-full-text">Browse Full Catalog on WhatsApp</span><span class="cta-short-text">Browse Catalog</span> <span class="cta-arrow">→</span>
         </a>
         
         <a class="hero-secondary-link reveal" href="#" onclick="openOrderSheet(event)">
@@ -1860,7 +1886,7 @@
             rel="noopener noreferrer"
             aria-label="Visit Sattvika Jewels Instagram profile"
           >
-            <div class="ios-row-icon ios-row-icon--instagram">
+            <div class="ios-row-icon">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
@@ -1883,7 +1909,7 @@
             rel="noopener noreferrer"
             aria-label="Read reviews highlight on Instagram"
           >
-            <div class="ios-row-icon ios-row-icon--reviews">
+            <div class="ios-row-icon">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
               </svg>
@@ -1903,7 +1929,7 @@
             onclick="openOrderSheet(event)"
             aria-label="How to Order guide"
           >
-            <div class="ios-row-icon ios-row-icon--order">
+            <div class="ios-row-icon">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10"></circle>
                 <line x1="12" y1="16" x2="12" y2="12"></line>
@@ -1964,29 +1990,13 @@
 
   <!-- ============ FOOTER ============ -->
   <footer class="footer" role="contentinfo">
-    <!-- Decorative background motifs in footer -->
-    <svg class="footer-motif footer-motif--left" aria-hidden="true">
-      <use href="#banner-motif"/>
-    </svg>
-    <svg class="footer-motif footer-motif--right" aria-hidden="true">
-      <use href="#banner-motif"/>
-    </svg>
-
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="footer-logo-text" aria-label="Sattvika Jewels">SATTVIKA JEWELS</div>
         <p class="footer-copy">Timeless Fine Jewelry. Rooted in Tradition.</p>
         <p class="footer-about">
-          Handcrafted Indian jewelry celebrating our rich cultural heritage. Meticulously designed traditional necklaces, earrings, bangles, and harams crafted for modern elegance.
+          Handcrafted Indian jewelry celebrating our rich cultural heritage. Meticulously designed for modern elegance.
         </p>
-      </div>
-      
-      <div class="footer-links-group">
-        <h4 class="footer-heading">Collections</h4>
-        <a href="https://wa.me/c/918078102550" target="_blank" rel="noopener noreferrer" class="footer-link">Earrings Collection</a>
-        <a href="https://wa.me/c/918078102550" target="_blank" rel="noopener noreferrer" class="footer-link">AD Stone Necklaces</a>
-        <a href="https://wa.me/c/918078102550" target="_blank" rel="noopener noreferrer" class="footer-link">Harams & Necklaces</a>
-        <a href="https://wa.me/c/918078102550" target="_blank" rel="noopener noreferrer" class="footer-link">Handcrafted Bangles</a>
       </div>
 
       <div class="footer-links-group">
@@ -1999,8 +2009,8 @@
       <div class="footer-links-group">
         <h4 class="footer-heading">Connect</h4>
         <div class="footer-info">
-          <p class="footer-info-item">📍 Kerala, India</p>
-          <p class="footer-info-item">📞 +91 80781 02550</p>
+          <p class="footer-info-item">Kerala, India</p>
+          <p class="footer-info-item">Tel: +91 80781 02550</p>
           <a href="https://www.instagram.com/sattvika_jewels/" target="_blank" rel="noopener noreferrer" class="footer-link">@sattvika_jewels</a>
         </div>
         <div class="footer-social">
@@ -2022,7 +2032,7 @@
   <div class="ios-sheet" id="order-sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
     <div class="ios-sheet-handle"></div>
     <div class="ios-sheet-header">
-      <h2 id="sheet-title" class="ios-sheet-title">How to place an order 🛍️</h2>
+      <h2 id="sheet-title" class="ios-sheet-title">How to place an order</h2>
       <button type="button" class="ios-sheet-close" onclick="closeOrderSheet()">Close</button>
     </div>
     <div class="ios-sheet-content">
@@ -2030,49 +2040,49 @@
         <div class="ios-list-item">
           <div class="ios-list-num">1</div>
           <div class="ios-list-text">
-            <strong>Browse our collections 📲</strong>
+            <strong>Browse our collections</strong>
             <p>Check out our collection on Instagram and pick your favorite designs.</p>
           </div>
         </div>
         <div class="ios-list-item">
           <div class="ios-list-num">2</div>
           <div class="ios-list-text">
-            <strong>Send us a message 💌</strong>
+            <strong>Send us a message</strong>
             <p>DM us or WhatsApp [+91 80781 02550] with the item you’d like to order.</p>
           </div>
         </div>
         <div class="ios-list-item">
           <div class="ios-list-num">3</div>
           <div class="ios-list-text">
-            <strong>Confirm Details ✅</strong>
+            <strong>Confirm Details</strong>
             <p>We’ll confirm price & availability.</p>
           </div>
         </div>
         <div class="ios-list-item">
           <div class="ios-list-num">4</div>
           <div class="ios-list-text">
-            <strong>Make Payment ✅</strong>
+            <strong>Make Payment</strong>
             <p>We’ll send payment details. Share a screenshot once done.</p>
           </div>
         </div>
         <div class="ios-list-item">
           <div class="ios-list-num">5</div>
           <div class="ios-list-text">
-            <strong>Share your details ✅</strong>
+            <strong>Share your details</strong>
             <p>Send your name, delivery address, and contact number.</p>
           </div>
         </div>
         <div class="ios-list-item">
           <div class="ios-list-num">6</div>
           <div class="ios-list-text">
-            <strong>Shipping & Tracking 🚚</strong>
+            <strong>Shipping & Tracking</strong>
             <p>Once your order is shipped, we’ll share the tracking details with you.</p>
           </div>
         </div>
         <div class="ios-list-item">
           <div class="ios-list-num">7</div>
           <div class="ios-list-text">
-            <strong>Receive & Shine 🎁</strong>
+            <strong>Receive & Shine</strong>
             <p>Enjoy your beautiful jewellery!</p>
           </div>
         </div>
