@@ -164,6 +164,10 @@
 
     * { box-sizing: border-box; }
 
+    html, body {
+      overscroll-behavior: none;
+    }
+
     body {
       margin: 0;
       background: var(--cream);
@@ -208,12 +212,12 @@
       top: 0;
       left: 0;
       right: 0;
-      height: calc(50px + env(safe-area-inset-top));
+      height: calc(60px + env(safe-area-inset-top));
       padding-top: env(safe-area-inset-top);
       background: rgba(248, 232, 212, 0.65); /* Translucent cream for premium frosted glass */
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
-      border-bottom: 0.5px solid rgba(34, 11, 27, 0.08);
+      border-bottom: 0.5px solid rgba(212, 175, 55, 0.25);
       z-index: 100;
       display: flex;
       align-items: center;
@@ -259,9 +263,9 @@
     .ios-segmented-control {
       display: flex;
       justify-content: center;
-      gap: 12px;
+      gap: 16px;
       margin: 24px auto 32px;
-      width: min(100%, 500px);
+      width: min(100%, 800px);
       overflow-x: auto;
       padding: 4px 16px;
       scrollbar-width: none;
@@ -271,10 +275,9 @@
     .ios-segment {
       flex: 0 0 auto;
       background: transparent;
-      border: none;
-      border-bottom: 2px solid transparent;
-      border-radius: 0;
-      padding: 8px 4px;
+      border: 0.5px solid rgba(91, 43, 30, 0.2);
+      border-radius: 24px;
+      padding: 10px 24px;
       font-size: 0.9rem;
       font-weight: 500;
       color: var(--muted-grey);
@@ -288,11 +291,11 @@
     }
 
     .ios-segment.active {
-      background: transparent;
-      color: var(--brand-maroon);
+      background: var(--brand-maroon);
+      color: var(--cream);
       font-weight: 600;
-      border-bottom: 2px solid var(--brand-maroon);
-      box-shadow: none;
+      border-color: var(--brand-maroon);
+      box-shadow: 0 4px 12px rgba(91, 43, 30, 0.15);
     }
 
     /* ---- iOS SHEET BOTTOM MODAL ---- */
@@ -319,7 +322,9 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: var(--cream);
+      background: rgba(253, 245, 235, 0.85); /* Premium frosted cream */
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
       border-radius: 20px 20px 0 0;
       box-shadow: 0 -8px 24px rgba(0,0,0,0.12);
       z-index: 201;
@@ -390,17 +395,17 @@
     }
 
     .ios-list-group {
-      background: #FFFFFF;
+      background: transparent;
       border-radius: 12px;
       overflow: hidden;
-      border: 0.5px solid rgba(34, 11, 27, 0.08);
+      border: 0.5px solid rgba(91, 43, 30, 0.15);
     }
 
     .ios-list-item {
       display: flex;
-      gap: 12px;
-      padding: 14px 16px;
-      border-bottom: 0.5px solid rgba(34, 11, 27, 0.06);
+      gap: 16px;
+      padding: 16px;
+      border-bottom: 0.5px solid rgba(91, 43, 30, 0.1);
     }
 
     .ios-list-item:last-child {
@@ -408,10 +413,11 @@
     }
 
     .ios-list-num {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       background: var(--brand-maroon);
       color: #FFFFFF;
+      border: 1px solid rgba(212, 175, 55, 0.5); /* Delicate gold accent */
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -438,14 +444,15 @@
     }
 
     .ios-sheet-footer-note {
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--deep-black);
-      background: rgba(91, 43, 30, 0.05);
+      font-size: 0.95rem;
+      font-style: italic;
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--brand-maroon);
+      background: transparent;
       border: 0.5px solid rgba(91, 43, 30, 0.15);
-      padding: 12px;
+      padding: 16px;
       border-radius: 12px;
-      margin-top: 16px;
+      margin-top: 20px;
       text-align: center;
       line-height: 1.4;
     }
@@ -466,6 +473,8 @@
       box-shadow: 0 4px 12px rgba(91, 43, 30, 0.15);
       margin-top: 20px;
     }
+
+    /* ---- FAB PURGED ---- */
 
     /* ---- LUXURY LIST MENU ---- */
     .ios-list-container {
@@ -607,24 +616,27 @@
       position: relative;
       z-index: 1;
       width: min(calc(100% - 2rem), 480px);
+      aspect-ratio: 1.6; /* 100% physically locked landscape ratio across all devices */
+      flex: 0 0 auto;
       margin-bottom: 2rem;
       border-radius: 8px;
       overflow: hidden;
       box-shadow: 0 12px 32px rgba(91, 43, 30, 0.1), 0 4px 12px rgba(0, 0, 0, 0.04);
       border: 0.5px solid rgba(91, 43, 30, 0.15);
-    }
-
-    @keyframes kenBurns {
-      0% { transform: scale(1.05); }
-      100% { transform: scale(1); }
+      background: var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      mix-blend-mode: darken; /* Erase white artifacts on the container level */
     }
 
     .hero-banner-container img {
       width: 100%;
-      height: auto;
+      height: 100%; 
+      object-fit: contain; /* Absolutely blocks any Safari stretching or zooming */
+      mix-blend-mode: darken; /* Dissolves white artifacts and mismatched backgrounds */
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%); /* Surgically slices off the bottom-right corner */
       display: block;
-      animation: kenBurns 15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      will-change: transform;
     }
 
     .hero-inner {
@@ -632,7 +644,7 @@
       z-index: 1;
       text-align: center;
       width: min(calc(100% - 2rem), 800px);
-      margin: 0 auto;
+      margin: 24px auto 0;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -741,7 +753,8 @@
 
     .cta-primary:active,
     .cta-secondary:active {
-      transform: scale(0.96);
+      transform: scale(0.92);
+      transition: transform 0.1s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
     .reveal {
@@ -828,6 +841,8 @@
       padding: 0 20px;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
+      overscroll-behavior-x: contain;
+      scroll-padding: 0 20px;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       -ms-overflow-style: none;
@@ -1207,7 +1222,7 @@
     .footer {
       position: relative;
       background: #180A08; /* Extremely rich dark luxury brown/maroon */
-      border-top: 1px solid rgba(253, 245, 235, 0.1); /* Elegant thin line */
+      border-top: 1px solid rgba(212, 175, 55, 0.25); /* Elegant gold line */
       color: var(--cream);
       padding: 80px 24px 40px;
       overflow: hidden;
@@ -1230,8 +1245,8 @@
 
     @media (min-width: 768px) {
       .footer-grid {
-        grid-template-columns: 1.5fr 1fr 1fr;
-        gap: 48px;
+        grid-template-columns: 1.5fr 1fr;
+        gap: 80px;
       }
       .footer {
         padding: 100px 48px 40px;
@@ -1240,11 +1255,12 @@
 
     .footer-logo-text {
       font-family: 'Cinzel', serif;
-      font-size: 24px;
-      font-weight: 400;
-      letter-spacing: 0.25em;
-      color: rgba(255, 255, 255, 0.95);
-      margin-bottom: 12px;
+      font-size: 32px;
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      color: rgba(253, 245, 235, 1);
+      margin-bottom: 16px;
+      text-transform: uppercase;
     }
 
     .footer-copy {
@@ -1310,12 +1326,13 @@
 
     .footer-link:hover,
     .footer-link:focus-visible {
-      color: #FFFFFF;
+      color: #D4AF37; /* Fade to Gold */
     }
 
     .footer-link:hover::after,
     .footer-link:focus-visible::after {
       width: 100%;
+      background-color: #D4AF37;
     }
 
     .footer-info {
@@ -1370,7 +1387,7 @@
       max-width: 1100px;
       margin: 64px auto 0;
       padding-top: 24px;
-      border-top: 0.5px solid rgba(253, 245, 235, 0.15);
+      border-top: 0.5px solid rgba(212, 175, 55, 0.15); /* Gold accent */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1419,7 +1436,22 @@
 
     @media (min-width: 768px) {
       .hero-logo-img { height: 80px; }
-      .hero-banner-container { max-height: 280px; }
+      .hero-banner-container { 
+        width: 100%;
+        max-width: var(--max-width);
+        aspect-ratio: auto;
+        border: none;
+        box-shadow: none;
+        background: transparent;
+        margin-bottom: 0; /* Pull content up */
+      }
+      .hero-banner-container img {
+        object-fit: contain;
+        max-height: 35vh; /* Keep image constrained so buttons fit above fold */
+      }
+      .hero-inner {
+        margin-top: 10px; /* Tighter spacing on desktop */
+      }
       .section-copy { font-size: 1.1rem; }
     }
 
@@ -1479,9 +1511,10 @@
       .hero-title {
         max-width: 100%;
         padding: 0 16px;
-        line-height: 1.25;
+        line-height: 1.35;
       }
       .hero-sub {
+        font-size: 1.05rem; /* Explicitly shrink on mobile for hierarchy */
         line-height: 1.5;
         margin-top: 10px;
         max-width: 90%;
@@ -1493,7 +1526,7 @@
         width: calc(100% - 32px);
         max-width: 340px;
         margin-top: 24px;
-        box-shadow: 0 12px 24px rgba(91, 43, 30, 0.25);
+        box-shadow: 0 16px 32px rgba(91, 43, 30, 0.15); /* Diffuse luxury glow */
         border: none;
       }
       .hero-secondary-link {
@@ -1513,7 +1546,7 @@
         font-size: 0.85rem;
       }
       .carousel {
-        padding: 0 16px;
+        padding: 0 24px;
         scroll-snap-type: x mandatory;
       }
       .cat-card {
@@ -1537,10 +1570,10 @@
         font-size: 1.8rem;
       }
       .footer {
-        padding: 48px 20px 24px;
+        padding: 64px 24px 40px;
       }
       .footer-grid {
-        gap: 28px;
+        gap: 48px;
       }
       .footer-about {
         display: none;
@@ -1549,8 +1582,11 @@
         font-size: 20px;
       }
       .footer-link {
-        padding-top: 6px;
-        padding-bottom: 6px;
+        padding-top: 12px;
+        padding-bottom: 12px;
+      }
+      .ios-list-container {
+        width: calc(100% - 32px);
       }
       .cta-secondary {
         width: calc(100% - 32px);
@@ -1999,12 +2035,7 @@
         </p>
       </div>
 
-      <div class="footer-links-group">
-        <h4 class="footer-heading">Customer Care</h4>
-        <a href="#" onclick="openOrderSheet(event)" class="footer-link">How to Order Guide</a>
-        <a href="https://www.instagram.com/stories/highlights/17978115308851212/" target="_blank" rel="noopener noreferrer" class="footer-link">Client Reviews</a>
-        <a href="https://wa.me/918078102550" target="_blank" rel="noopener noreferrer" class="footer-link">Direct WhatsApp Shop</a>
-      </div>
+
 
       <div class="footer-links-group">
         <h4 class="footer-heading">Connect</h4>
@@ -2089,7 +2120,7 @@
       </div>
 
       <div class="ios-sheet-footer-note">
-        🛑 Don’t forget to send us your review or tag us in your photos ❤️✨
+        Please do not forget to share your review or tag us in your beautiful photos.
       </div>
 
       <a href="https://wa.me/918078102550" target="_blank" rel="noopener noreferrer" class="ios-sheet-primary-btn">
